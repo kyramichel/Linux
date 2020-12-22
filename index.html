@@ -3,13 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title> MANAGING LINUX SERVER </title>
+    <title> MANAGING A LINUX SERVER </title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <h1> MANAGING LINUX SERVER MADE SIMPLE  </h1>
-    <h2> Why Linux server?</h2>
-
+    
     <!--
             using CSS and JS
         -->
@@ -18,56 +17,128 @@
             
         <ul>
             <li>Linux is open-source. </li>
-            <li>Managing a Linux server
-           offers small businesses a low-cost option for delivering content, apps and services to clients.</li>
-            <li>Cloud infrastructure like AWS and Google Cloud are Linux based.</li>
+            <li>Linux server
+           offers businesses a low-cost option for delivering content, apps and services to clients.</li>
+            <li>Cloud infrastructure is Linux based.</li>
         </ul>
            
 
        </p>
 
-      <h2> Guide to installing Linux server</h2>
+      <h1> 1. Guide to installing Linux server</h1>
 
       <! --
             install Linux server 
          -->
       
       <p>
-           Steps to install Ubuntu server on VM Virtual Box. 
+           Steps to install Ubuntu Server on VM Virtual Box.
           
        </p>
 
-      
-       <h2> Manage Linux server </h2>
+
+    <h2>Download Ubuntu Server and Virtual Box:</h2>
+
+    <p> Go to www.ubuntu.com and chose download Ubuntu Server. 
+    
+    I use the version 18.04.5 LTS. You can chose Option 3 -> Altenative downloads -> Get the previous LTS.     
+    </p>
+
+<p> Go to www.virtualbox.org then Downloads (left pane)
+Click download VirtualBox-6.1.16 file  for Windows hosts or MacOS hosts (depending on the system you are using). Next, download Oracle VM VirtualBox Extension Pack (for all platforms).
+</p>
+
+    
+    <p> Go to downloads folder and check to make sure you have the software needed:</p>
+    
+    <img src="files_downloaded.jpg" alt="files downloaded" width="402" height="65">
+    
+    <p>Click to run the Oracle_VM_VirtualBox_Extension_Pack file. This will open the Virtual Box. Accept the defaults and the legal agreement.</p>
+    
+    <h2> Use Virtual Box to generate a Linux server virtual machine </h2>
+    
+    <p> Open VirtualBox. Click Machine/New. Give a name to your machine (ex: admin). Type: Linux and chose default settings. Memory size: chose around to the green line (required)  - check how much memory you have available). Hard disk: Create a virtual hard disk now, Accept default VDI (VirtualBox disk image) Storage on physical hard disk: fixed size (you can also chose dynamically allocated) File location and size: chose as required and depending on your available memory. Click create. </p>
+    
+Next, go to Settings/Network: Check Enable adaptor. Change  Nat to Bridge Adaptor. (The adaptor now will get an IP address on the same network as your computer, instead of using Nat)
+    
+<h2> Start the installation </h2>    
+ 
+<p>Click Start/Empty. Select the ubuntu.iso file that you downloaded. (that's a virtual dvd). Click start. 
+    
+Use the arrow keys to make selections.
+Chose language, select Ubuntu Server.
+It's detecting the (virtual) hardware, loading the drivers needed for the boot process, configuring the network.
+Choose host name (Linux Server), continue, Add user : admin, create a password. Don't use encryption, continue.
+
+Partitioning method: use entire disk  ( without LVM), format the hard disk (yes)
+Finish partitioning and write to disk. 
+HTP proxy: none
+Install security updates automatically
+Chose software to install:  Select Open SSH server (unselect default Standard sys utilties)
+Accept default (Yes) to install boot loader on the master boot record.
+Continue. </p>
+    
+
+<p>If the installation is successful you will see a Log In Prompt.
+Enter with your username and password. </p>
+    
+    
+
+       <h1> 2. Guide to Managing Linux server </h1>
 
       <! --
             manage Linux server 
          -->
       
-      <p>
-           Basic Linux commands used in day-to-day tasks of a Linux admin.
-          
-       </p>
+    <h2> Basic Linux admin tasks </h2>
+    
+    
+    <p> Adding users. To add a new user named Cali, type the Linux command: <sub>sudo adduser Cali</sub>. It prompts you to create a password for Cali and add its info. To check if the user Cali is added, type the Linux command: <sub>cat /etc/passwd</sub> (to read passwd file). At the bottom of this file are listed users. </p>
+    
 
-      
+
+    <p> To remove user Cali, type Linux command:<sub> sudo userdel Cali</sub>. You can check that Cali is removed by reading the passwd file again. However, the data associated with user is not removed. If you type the Linux command: <sub>cd /home</sub>. Followed by the command: <sub>ls -al</sub>. You can see that Cali's home directory is not deleted. </p>
+    
+    <p>To remove Cali's data type Linux command: <sub>sudo rm -R Cali</sub>. (R for remove recurrsively). </p>
+    
+    
        <h2> Remote access to Linux server </h2>
 
       <! --
             access the server remotely  
          -->
       
-      <p>
-           Access reemotely Linux server via PuTTy (on Windows), Terminal (on Mac). 
-.
+    <p>
+         First you must get your IP address. Type the Linux command: <sub>ifconfig -a</sub>. Under emp0s3, find inet 10.1.1.. (or inet 192.168..). Write down your IP address: 10.1.1... (or 192.168..) 
           
        </p>
+      
+      <p>
+           To access reemotely Linux server on a Windows machine download PuTTy from www.putty.org. Open PuTTy, enter your IP address, port 22, SSH. Click Open and you are prompted to log in remotely to your Linux server. 
+       </p>
 
+
+      <p>
+           To access reemotely Linux server on a Mac use the Terminal (In the menu bar, click Go/Applications/Utilities/Terminal). Open Terminal and type ssh space IP_address. And you will be prompted to log in remotely to your Linux server.  
+.
+       </p>
       
+ <p> To see who is logged in your machine, type the Linux command: <sub>who</sub></p>     
       
+<p> To kill a remote login session, check all your running processes by typing the Linux command: <sub> ps -fu username </sub>. Look up the PID for the process, then type the Linux command <sub>kill - HUP PID_number</sub>. That sends a SIGHUP signal to a login shell that allows the application to exit properly.
+
+<p> If your Firefox browser is unresponsive type the command: <sub> pidof firefox</sub>to get the PID then type <sub> kill- PID_number</sub>. Alternatively, you can combine the two commands into one: <sub> kill -9 $(pidof firefox)</sub> to find PID and kill it. </p>
+            
+
+
+<h1> Guide to Maintaining Linux Server</h1>
       
-      
-      
-      
+   <h2> Updating and upgrading packages </h2>   
+    
+    LInux server must be updated and upgraded in order to limit any potential security risks and bugs that can affect its performance. 
+    
+    To update the Linux server type the command <sub> sudo apt-get update</sub>. Then type <sub> sudo apt-get upgrade</sub> to upgrade. If there are some packages left not upgraded, they can be upgraded manually.     
+    
   </body>
 
 
