@@ -25,19 +25,18 @@
 
        </p>
 
-      <h1> 1. Guide to installing Linux server</h1>
+      <h1> Guide to Installing Linux Server </h1>
 
       <! --
             install Linux server 
          -->
       
-      <p>
-           Steps to install Ubuntu Server on VM Virtual Box.
-          
-       </p>
+    
+    
+      <h2> A. Linux Server Virtual Machine</h2>
 
 
-    <h2>Download Ubuntu Server and Virtual Box:</h2>
+    <h3>Download Ubuntu Server and Virtual Box:</h3>
 
     <p> Go to www.ubuntu.com and chose download Ubuntu Server. 
     
@@ -55,17 +54,17 @@ Click download VirtualBox-6.1.16 file  for Windows hosts or MacOS hosts (dependi
     
     <p>Click to run the Oracle_VM_VirtualBox_Extension_Pack file. This will open the Virtual Box. Accept the defaults and the legal agreement.</p>
     
-    <h2> Use Virtual Box to generate a Linux server virtual machine </h2>
+    <h3> Use Virtual Box to generate an Ubuntu server VM </h3>
     
     <p> Open VirtualBox. Click Machine/New. Give a name to your machine (ex: admin). Type: Linux and chose default settings. Memory size: chose around to the green line (required)  - check how much memory you have available). Hard disk: Create a virtual hard disk now, Accept default VDI (VirtualBox disk image) Storage on physical hard disk: fixed size (you can also chose dynamically allocated) File location and size: chose as required and depending on your available memory. Click create. </p>
     
 Next, go to Settings/Network: Check Enable adaptor. Change  Nat to Bridge Adaptor. (The adaptor now will get an IP address on the same network as your computer, instead of using Nat)
     
-<h2> Start the installation </h2>    
- 
-<p>Click Start/Empty. Select the ubuntu.iso file that you downloaded. (that's a virtual dvd). Click start. 
+<p> To start the installation of Linux server VM, click Start/Empty. Select the ubuntu.iso file that you downloaded. (a virtual cd)</p>
+
+<p>Note: Ubuntu iso image is a single file that can be burned on physical dvd or  can be used to create a bootable usb flash drive (see below). </p>
     
-Use the arrow keys to make selections.
+<p>Click start. Use the arrow keys to make selections.
 Chose language, select Ubuntu Server.
 It's detecting the (virtual) hardware, loading the drivers needed for the boot process, configuring the network.
 Choose host name (Linux Server), continue, Add user : admin, create a password. Don't use encryption, continue.
@@ -84,7 +83,21 @@ Enter with your username and password. </p>
     
     
 
-       <h1> 2. Guide to Managing Linux server </h1>
+
+<h2> B. Linux Server on your PC </h2>
+    
+<p>To install Linux on your computer you will need a bootable live USB flash drive. To create one, download the UUI (Universal USB Installer) that is an open-source live Linux USB flash drive creation software.</p>
+
+<img src="UUI.jpg" alt="uui" width="233" height="33">
+    
+    
+<p> Next, run the Universal USB Installer.exe file then select the Ubuntu ISO image previously downloaded. After completition you have a bootable USB Flash Drive with Ubuntu sever on it.</p>  
+    
+<p> Insert the bootable USB Flash Drive in your computer to start the Linux Server installation process. In order to boot your computer from the bootable flash drive, you will have to reach the boot options screen on your PC. This varies with the PC manufacturer and model of the computer. You might have to Press Esc key a few times and one of the function keys F9 or F10. From the boot option select Flash Drive and the installation will start. The rest of Linux server installation is similar to the above steps in the creating a Linux server VM.</p>
+
+    
+    
+    <h1> Guide to Managing Linux server </h1>
 
       <! --
             manage Linux server 
@@ -102,6 +115,9 @@ Enter with your username and password. </p>
     <p>To remove Cali's data type Linux command: <sub>sudo rm -R Cali</sub>. (R for remove recurrsively). </p>
     
     
+    <p> We need to use <sub>sudo </sub> to execute commands such as: add and remove users, set the rights of all the other users, install software or configure, maintain the server.
+    Note that only the system admin - the user who installed the software gets automatically the root rights.</p>
+        
        <h2> Remote access to Linux server </h2>
 
       <! --
@@ -132,12 +148,89 @@ Enter with your username and password. </p>
 
 
 <h1> Guide to Maintaining Linux Server</h1>
-      
-   <h2> Updating and upgrading packages </h2>   
     
-    LInux server must be updated and upgraded in order to limit any potential security risks and bugs that can affect its performance. 
+<h2>Linux packaging system </h2>
+    
+<p>Linux has a package store similar to the mobile app stores.\\ (In fact, mobile app stores were modeled after Linux package-management system.)</p>
+    
+<p>Ubuntu (Debian) package files have the extension .deb and they exist in repositories. Packages use dependencies, which are additional packages required. Ubuntu uses apt (Advanced Packaging Tool) for package management.</p>
+    
+The <sub>apt</sub> command-line tool is intended to be used interactively, while the <sub>apt-get</sub> command should be used in scripts. For basic commands the two are identical.
+    
+    
+   <h2> Updating and upgrading packages</h2>   
+    
+    Linux server must be updated and upgraded in order to limit any potential security risks and bugs that can affect its performance. 
+    
     
     To update the Linux server type the command <sub> sudo apt-get update</sub>. Then type <sub> sudo apt-get upgrade</sub> to upgrade. If there are some packages left not upgraded, they can be upgraded manually.     
+
+    
+    
+    <h2>Installing new software</h2>
+
+    
+    Packages available in Ubuntu’s default repositories can be install via the apt packaging system. For example, in order to install a new package, eg. the webserver called Nginx just type: <sub>sudo apt-get install nginx</sub>
+
+    <h2> Delete package repositories </h2>
+    
+    <p>The apt package index is a database of available packages from the repositories. To update the apt package index type <sub>sudo apt update</sub>. To delete a repository type <sub> sudo nano /etc/apt/sources.list</sub> to open /etc/apt/sources.list file, then comment or remove the repo entry. Save and close the /etc/apt/sources.list file.</p>
+    
+    <p> Nano is a text editor (see below)</p>
+    
+    <p>You may look for the repository into the /etc/apt/sources.list.d directory. Just type 
+<sub> cd /etc/apt/sources.list.d</sub> then <sub>ls -al</sub>. Simply delete it using the command sudo rm.  
+
+<p> To remove gpg keys, type <sub>sudo apt-key list</sub> to list them all, then use the command <sub>apt-key del </sub> followed by the last 8 char of the repository key</p>    
+    
+    
+   <h1> Text Editors: nano and vim </h1>
+    
+    <p>The best way to edit files on Ubuntu Server is using nano and vim. Nano is easy to learn. To create or edit text file using nano just type <sub>nano filename</sub></p>
+    
+    <p>To create/edit a file using vim type <sub> vim filename</sub>. Then Press i to enter insert mode. Type text, when done, press ESC for command mode and type <sub> :wq!</sub> to save the file and exit vim.</p>
+    
+    <p> Vim is the most popular among Linux admins and developers.With vim you can do amazing things if you learn its ways. </p>
+    
+    
+    
+    
+    <h1>Basic Firewall set up </h1>
+    
+    Uncomplicated Firewall (UFW) is an interface that makes it easy to configure a firewall. 
+    
+    UFW is already installed by default on Ubuntu. 
+    
+    
+    <p> Type <sub> sudo ufw app list </sub>. It shows that OpenSSH is an application registered with UFW. To allow SSH connections type <sub>sudo ufw allow OpenSSH. To enable UFW, use the command <sub>sudo ufw enable</sub>. That sets up a firewall rule that allows SSH connections.</p>
+        
+    <p> The firewall is now active. Run <sub>sudo ufw status verbose</sub> command to see the rules that are set.
+
+    <p> The command <sub>sudo ufw app list</sub> allows you to see the available connections. You have OpenSSH and Nginx.You may want to allow connections that your server needs to respond to by specifying a port or known service. </p>
+        
+    <p> For example, type <sub>sudo ufw allow OpenSSH</sub> to allow remote access and/or <sub>sudo ufw allow http</sub> or <sub>sudo ufw allow 80</sub> to allow unencrypted web servers use or type <sub>sudo ufw allow 'Nginx HTTP'</sub> </p> 
+    
+    <p> To configure the Firewall to allow HHTPS secure traffic type <sub>sudo ufw allow 'Nginx Full'</sub> and delete the redundant Nginx HTTP <sub>sudo ufw delete allow 'Nginx HTTP'</sub></p>
+    
+    <p>To allow future connections. For example, to allow connections from a specific IP (eg your home IP) type <sub>sudo ufw allow from some_IP</sub>.
+    
+    <p> To check the list of current rules type <sub>sudo ufw status</sub>. You should see that HTTPS traffic is allowed. 
+    </p>
+
+    <h2>Security and encryption. </h2>
+    
+     <p>Configure SSL for your Linux server.</p>
+    
+    SSL (Secure Socket Layer) is  used for securing the data transfer between client and server.
+    SSL uses port 443 instead of port 80. 
+    
+
+    
+    <h1> Networking. Host-client interactions </h1>
+    
+     To understand networking and interactions between machines you will need to have more than one Linux machine. Configuring different virtual machines to do different tasks is easy. 
+    
+    <p>To set up another Ubuntu server, open your VirtualBox. Then before powering on your machine, right click on it and select clone. </p>
     
   </body>
 
