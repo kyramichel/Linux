@@ -2,7 +2,3 @@
 ## Details @ https://github.com/kyramichel/Linux-Cloud-Server/blob/main/Install%20and%20Run%20Linux%20Server%20in%201%20hour.pdf
 
 
-
-
-PS: If you can't open a Jupyter notebook on github, use nbviewer:
-https://github.com/kyramichel/SimpleWay2Open-IPYNB-files
